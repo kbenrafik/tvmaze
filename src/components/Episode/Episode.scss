@@ -1,0 +1,22 @@
+.episode {
+  &__wrapper {
+    display: flex;
+    margin-bottom: 20px;
+  }
+
+  &__cover {
+    margin-right: 15px;
+    img {
+      width: 200px;
+    }
+  }
+
+  &__name {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  &__summary {
+
+  }
+}

@@ -1,0 +1,17 @@
+.episodes {
+  display: flex;
+
+  &__seasons {
+    width: 250px;
+  }
+
+  &__list {
+    width: calc(100vw - 250px);
+  }
+
+  &__season {
+    display: block;
+    margin-bottom: 25px;
+    cursor: pointer;
+  }
+}
