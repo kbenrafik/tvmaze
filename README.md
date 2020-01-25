@@ -81,3 +81,6 @@ I've done 2 unit test, one for the model (just plain js) and 1 for episode compo
 files :
 * model.test.js
 * episode.test.js
+
+You can run tests:
+`yarn test`
