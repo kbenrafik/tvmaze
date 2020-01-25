@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render episode 1`] = `
+<div
+  className="episode__wrapper"
+>
+  <div
+    className="episode__cover"
+  >
+    <a
+      href="/show/659/episode/1"
+      onClick={[Function]}
+    >
+      <img
+        alt="episode name"
+      />
+    </a>
+  </div>
+  <div
+    className="episode__detail"
+  >
+    <h3
+      className="episode__name"
+    >
+      episode name
+    </h3>
+    <div
+      className="episode__summary"
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "this is summary",
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`should return null 1`] = `null`;

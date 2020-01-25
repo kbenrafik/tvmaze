@@ -1,8 +1,13 @@
 .header {
-  padding: 5px 0;
+  padding-top: 25px;
+  padding-left: 25px;
   text-align: left;
+  width: 100vw;
+  height: 60px;
   position: fixed;
-
+  left: 0;
+  top: 0;
+  z-index: 5;
 
   &__logo {
     height: 30px;

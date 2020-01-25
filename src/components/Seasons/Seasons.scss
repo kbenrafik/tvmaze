@@ -1,0 +1,32 @@
+@import '../../styles/shared';
+
+.seasons {
+  display: flex;
+
+  @include mobile {
+    display: block;
+  }
+
+  &__list {
+    width: 250px;
+
+    @include mobile {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+    }
+  }
+
+  &__episodes {
+    width: calc(100vw - 250px);
+    @include mobile {
+      width: 100%;
+    }
+  }
+
+  &__item {
+    display: block;
+    margin-bottom: 25px;
+    cursor: pointer;
+  }
+}

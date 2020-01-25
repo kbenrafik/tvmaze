@@ -1,0 +1,11 @@
+.home-page {
+  margin: 0 auto;
+  width: 50vw;
+  padding-top: 20vh;
+
+  &__link {
+    color: white;
+    display: block;
+    margin-bottom: 50px;
+  }
+}

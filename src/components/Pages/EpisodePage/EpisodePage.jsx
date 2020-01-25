@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   useParams,
   Link
 } from 'react-router-dom';
-
-import {
-  useAppClient
-} from '../../AppContext';
 import Layout from '../../Layout';
 import ButtonBase from '../../ButtonBase';
+import selectors from '../../../redux/selectors';
+import { actions } from '../../../redux/actions';
 import buttonBack from './images/button-back.svg'
 import './EpisodePage.scss';
 
@@ -18,26 +17,20 @@ import './EpisodePage.scss';
  * @constructor
  */
 const EpisodePage = () => {
-  const [episode, setEpisode] = useState(undefined);
-  const client = useAppClient();
   let {
     id: idEpisode,
     idShow
   } = useParams();
+  const dispatch = useDispatch();
+  const episode = useSelector(state => selectors.selectEpisode(state, idEpisode));
+  const getEpisode = id => dispatch(actions.getEpisode(id));
 
   useEffect(() => {
-    const fetch = async () => {
-      const episodeModel = await client.episode.fetch(idEpisode);
-      setEpisode(episodeModel);
-    };
-
-    fetch();
+    getEpisode(idEpisode)
   }, [idEpisode]);
 
   if (!episode) {
-    return <div>
-      loader
-    </div>;
+    return null
   }
 
   const showImageStyle = {

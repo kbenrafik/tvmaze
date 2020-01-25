@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   useParams
 } from 'react-router-dom';
 
-import {
-  useAppClient
-} from '../../AppContext';
-import Episodes from '../../Episodes';
+import { actions } from '../../../redux/actions';
+import selectors from '../../../redux/selectors';
+import Seasons from '../../Seasons';
 import Layout from '../../Layout';
 import './ShowPage.scss';
 
@@ -16,28 +16,23 @@ import './ShowPage.scss';
  * @constructor
  */
 const ShowPage = () => {
-  const [showModel, setShowModel] = useState(undefined);
-  const client = useAppClient();
   let {
-    id: showId
+    id
   } = useParams();
+  const dispatch = useDispatch();
+  const show = useSelector(state => selectors.selectShow(state, id));
+  const getShow = id => dispatch(actions.getShow(id));
 
   useEffect(() => {
-    const fetch = async () => {
-      const showModel = await client.show.fetch(showId);
-      setShowModel(showModel);
-      console.log(showModel);
-    };
+    getShow(id);
+  }, [id]);
 
-    fetch();
-  }, [showId]);
-
-  if (!showModel) {
+  if (!show) {
     return null;
   }
 
   const showImageStyle = {
-    backgroundImage: `url(${showModel.getImage()})`
+    backgroundImage: `url(${show.getImage()})`
   };
 
   return (
@@ -48,17 +43,17 @@ const ShowPage = () => {
       <div className="show-detail__wrapper">
         <div className="show-detail">
           <div className="show-cover">
-            <img className="show-cover__image" src={showModel.getImage('medium')} alt=""/>
+            <img className="show-cover__image" src={show.getImage('medium')} alt=""/>
           </div>
           <h1 className="show-name">
-            {showModel.getName()}
+            {show.getName()}
           </h1>
         </div>
-        <div className="show__summary" dangerouslySetInnerHTML={{__html: showModel.getSummary()}}/>
+        <div className="show__summary" dangerouslySetInnerHTML={{__html: show.getSummary()}}/>
         <div className="show-episodes">
           <h3 className="show__episodes-title">Episodes</h3>
           <div className="show-episodes__list">
-            <Episodes idShow={showId}/>
+            <Seasons idShow={id}/>
           </div>
         </div>
       </div>

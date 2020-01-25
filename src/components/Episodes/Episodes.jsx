@@ -1,96 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import {
-  useAppClient
-} from '../AppContext';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { actions } from '../../redux/actions';
+import selectors from '../../redux/selectors';
 import Episode from '../Episode';
 import './Episodes.scss';
 
 /**
- * Episodes grouped by seasons
+ * Episodes by season
  * @param {String} idShow
  * @returns {*}
  * @constructor
  */
 const Episodes = ({
+  idSeason,
   idShow
 }) => {
-  const [episodes, setEpisodes] = useState([]);
-  const [seasons, setSeasons] = useState([]);
-  const [selectedSeason, setSelectedSeason] = useState();
-  const client = useAppClient();
+  const dispatch = useDispatch();
+  const episodes = useSelector(state => selectors.selectEpisodes(state, idShow, idSeason));
+  const getEpisodesBySeason = (idShow, idSeason) => dispatch(actions.getEpisodesBySeason(idShow, idSeason));
 
   useEffect(() => {
-    const fetch = async () => {
-      const seasons = await client.season.list(idShow);
-      setSeasons(seasons);
-      const firstSeason = seasons[0];
-      await onSelectSeason(firstSeason.getId());
-    };
+    getEpisodesBySeason(idShow, idSeason);
+  }, [idShow, idSeason]);
 
-    fetch();
-  }, [idShow]);
+  if (!episodes || !episodes.length) {
+    return null;
+  }
 
-  /**
-   * On select a season should sow fetch the list of episodes
-   * @param {String} idSeason
-   * @returns {Promise<void>}
-   */
-  const onSelectSeason = async (idSeason) => {
-    setSelectedSeason(idSeason);
-    const episodes = await client.episode.listBySeason(idSeason);
-    setEpisodes(episodes);
-  };
-
-  /**
-   * Render seasons list as numbers
-   * @param {SeasonModel[]} seasons
-   * @returns {null|*}
-   */
-  const renderSeasons = (seasons) => {
-    if (!seasons || !seasons.length) {
-      return null;
-    }
-    return (
-      <ul>
-        {seasons.map(season => {
-          return (
-            <li>
-              <span
-                className="episodes__season"
-                onClick={() => onSelectSeason(season.getId())}>
-                Season {season.getNumber()}
-              </span>
-            </li>
-          );
-        })}
-      </ul>
-    );
-  };
-
-  /**
-   * Render episodes
-   * @param {EpisodeModel[]} episodes
-   * @returns {null|*}
-   */
-  const renderEpisodes = (episodes) => {
-    if (!seasons || !seasons.length) {
-      return null;
-    }
-    return episodes
-      .map(episode => <Episode episode={episode} idShow={idShow}/>);
-  };
-
-
-  return (
-    <div className="episodes">
-      <div className="episodes__seasons">
-        {renderSeasons(seasons)}
-      </div>
-      <div className="episodes__list">
-        {renderEpisodes(episodes)}
-      </div>
-    </div>
-  );
+  return (episodes || [])
+    .map(episode => <Episode episode={episode} idShow={idShow} key={episode.getId()}/>);
 };
 
 export default Episodes;

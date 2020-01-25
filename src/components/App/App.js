@@ -6,7 +6,8 @@ import {
 } from 'react-router-dom';
 import {
   ShowPage,
-  EpisodePage
+  EpisodePage,
+  HomePage
 } from '../Pages';
 
 
@@ -14,6 +15,9 @@ const App = () => {
   return (
     <Router>
       <Switch>
+        <Route exact path="/">
+          <HomePage/>
+        </Route>
         <Route path="/show/:idShow/episode/:id">
           <EpisodePage/>
         </Route>
