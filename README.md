@@ -5,6 +5,7 @@ TVMAZE was bootstrapped with [Create React App](https://github.com/facebook/crea
 - [Quick start](#quick-start)
 - [Application](#application)
 - [UI flow](#ui-flow)
+- [Data flow](#data-flow)
 - [Client API SDK](client-api-SDK)
   + [Show](#show)
   + [Episode](#episode)
@@ -43,6 +44,36 @@ I've used hooks in react and also redux
  * Show: /show/:idShow
  * Episode: /show/:idShow/episode/:idEpisode
  
+ ## Data flow
+ In page load the application create a new instance of the sdk client, this how we interacte with the thirdparty 'tvmaze',
+ and for the react components have access only to actions 'redux' which can get data from tvmaze and store it in the global store.
+ 
+ Store looks like :
+ ```
+{
+  shows: {
+    // ID show
+    478: {
+      // show data
+    }
+  },
+  seasons: {
+    // ID show
+    478: [
+    // list of seasons
+    ] 
+  },
+  episode: {
+    // ID episode
+    78: {
+      //episode details
+    }
+  }
+}
+ ```
+
+During calling a new 'record (show, seasons, episode)' I check if it's already in the store 'as cache' if it's the case we prevent the call.
+  
  ## Client Api SDK
  the aim of this SDK is to decouple the ui and the api of tvmaze.
  
