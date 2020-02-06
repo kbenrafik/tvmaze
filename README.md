@@ -1,5 +1,7 @@
 TVMAZE was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+![Alt text](https://raw.githubusercontent.com/kbenrafik/tvmaze/master/captured.gif "DEMO")
+
 ## Table Of Contents
 
 - [Quick start](#quick-start)
